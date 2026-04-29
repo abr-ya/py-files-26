@@ -1,50 +1,94 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+Sync Impact Report (speckit-constitution)
+- Version change: 1.0.0 → 1.0.1
+- Change type: Editorial — unified formatting and normative wording across principles; no policy intent change
+- Modified principles: style normalization only (headings, MUST/SHOULD, paragraph structure for former bullet lists)
+- Templates requiring updates: none for this edit
+- Follow-up TODOs: none
+-->
+
+# py-files-26 Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### 1. Spec-kit workflow fidelity
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+Features MUST follow the Specify workflows (`/speckit.specify`, clarification as needed,
+`/speckit.plan`, `/speckit.tasks`, `/speckit.implement`) unless the feature brief explicitly
+documents a waived path (for example a spike). Specification artifacts MUST live under the
+feature’s designated `specs/` paths and remain the source of truth for scope.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### 2. Constitution authority (NON-NEGOTIABLE)
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+`.specify/memory/constitution.md` overrides ad hoc conventions: `spec.md`, `plan.md`, and
+`tasks.md` MUST NOT contradict it. Conflicts MUST be resolved by revising those artifacts or by
+running `/speckit-constitution` to amend governance deliberately—not by silently ignoring a MUST.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### 3. Independent, testable increments
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+User scenarios MUST be prioritized (P1, P2, …) and independently testable. Acceptance criteria
+MUST be concrete enough to verify without subjective interpretation.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### 4. Verification discipline
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+Implementations MUST include automated verification where the stack supports it (unit tests,
+contract checks, linters). If automated checks are omitted, the omission MUST be justified in the
+feature plan’s Complexity Tracking (or equivalent) with an explicit mitigation.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+### 5. Security first
+
+Passwords MUST NOT be transmitted in plaintext—only hashes or tokens as appropriate. All file
+operations MUST be logged on the client without logging file contents. Authentication MUST be
+required for every operation except a documented public download, when that mode exists.
+
+### 6. Client cross-platform compatibility
+
+The Python client MUST run on Windows, Linux, and macOS without platform-specific patches. Any
+browser client MUST support current versions of Chrome, Firefox, Edge, and Safari (last two major
+versions each).
+
+### 7. Explicit client–server contract
+
+The API MUST be REST-shaped with JSON for metadata and binary streams for file payloads. URLs MUST
+include explicit versioning (for example `/api/v1/...`). Every endpoint MUST be described in an
+OpenAPI (YAML) document kept with the project.
+
+### 8. Simplicity as competitive advantage
+
+Dependencies MUST stay minimal: the Python client SHOULD rely on `requests`, `typing`, and the
+standard library unless the plan documents a broader exception. Browser clients SHOULD use vanilla
+JavaScript or a lightweight layer; React, Vue, or similar frameworks MUST NOT be introduced unless
+the feature plan documents why and addresses trade-offs (for example under Complexity Tracking). A
+graphical UI for the Python client is optional where a CLI satisfies the scenario.
+
+### 9. Testability out of the box
+
+Authentication, upload, file listing, and comparable surfaces MUST each have automated tests.
+External calls MUST be exercised with mocks or test doubles so suites run without live services.
+
+### 10. Transparent operation status
+
+Users MUST always receive clear feedback for long-running actions: upload progress, success or
+failure, and actionable error reasons when something goes wrong.
+
+## Technology & Repository Constraints
+
+Default stack assumption for work in this repository is Python unless a feature plan explicitly
+defines another primary language or runtime. Dependencies and deployment constraints MUST be stated
+in `plan.md` for each feature so reviewers can validate Principle IV.
+
+## Workflow & Quality Gates
+
+Plans MUST complete the Constitution Check before Phase 0 research and re-check after Phase 1
+design. Before implementation, `/speckit.analyze` SHOULD run when `tasks.md` exists to validate
+alignment across spec, plan, and tasks.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+Amendments MUST update `.specify/memory/constitution.md` via `/speckit-constitution` (or an
+explicit documented equivalent), bump `CONSTITUTION_VERSION` per semantic versioning (MAJOR:
+backward-incompatible governance; MINOR: new principles or material guidance; PATCH: clarifications
+only), and record ratification/amendment dates. Compliance SHOULD be verified during planning,
+`/speckit.analyze`, and review—not only at merge time.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.1 | **Ratified**: 2026-04-29 | **Last Amended**: 2026-04-29

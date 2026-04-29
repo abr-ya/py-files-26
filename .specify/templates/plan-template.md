@@ -31,7 +31,18 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+Per `.specify/memory/constitution.md`:
+
+- **Workflow fidelity**: Feature artifacts live under `specs/` and follow the intended `/speckit.*`
+  pipeline unless this plan documents an explicit waiver.
+- **Authority**: No MUST in the constitution is violated; any tension is resolved via plan/spec
+  edits or a constitution amendment—not informal bypass.
+- **Tests/increments**: User stories remain prioritized and independently testable; acceptance
+  criteria stay objectively verifiable.
+- **Verification**: Automated checks are planned where feasible; justified gaps reference Complexity
+  Tracking below.
+- **Simplicity**: Scope and architecture choices align with Principle V; extra complexity is listed
+  under Complexity Tracking if not obvious.
 
 ## Project Structure
 
