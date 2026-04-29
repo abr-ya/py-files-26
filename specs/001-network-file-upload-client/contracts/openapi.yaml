@@ -1,0 +1,315 @@
+openapi: 3.0.3
+info:
+  title: Network File Upload API
+  description: >
+    REST API (versioned under /api/v1) for authenticated upload, download, and resumable upload
+    sessions. JSON for metadata; octet-stream for file bytes. Aligned with repository constitution
+    Principle 7.
+  version: 1.0.0
+
+servers:
+  - url: https://{host}/api/v1
+    variables:
+      host:
+        default: localhost:8000
+
+tags:
+  - name: Auth
+  - name: Objects
+  - name: UploadSessions
+
+paths:
+  /auth/register:
+    post:
+      tags: [Auth]
+      summary: Register (when deployment allows self-service)
+      operationId: register
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterRequest"
+      responses:
+        "201":
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserPublic"
+        "403":
+          description: Registration disabled
+
+  /auth/login:
+    post:
+      tags: [Auth]
+      summary: Obtain JWT access token
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      responses:
+        "200":
+          description: Token issued
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TokenResponse"
+        "401":
+          description: Invalid credentials
+
+  /objects:
+    get:
+      tags: [Objects]
+      summary: List current user's stored objects (metadata)
+      operationId: listObjects
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: List
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/StoredObjectMeta"
+    post:
+      tags: [Objects]
+      summary: Simple single-shot upload (browser / small files)
+      operationId: uploadObjectSimple
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        "201":
+          description: Object stored
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StoredObjectMeta"
+        "413":
+          description: File too large
+
+  /objects/{object_id}:
+    get:
+      tags: [Objects]
+      summary: Metadata for one object (owner only)
+      operationId: getObjectMeta
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/ObjectId"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StoredObjectMeta"
+        "404":
+          description: Not found or access denied
+
+  /objects/{object_id}/content:
+    get:
+      tags: [Objects]
+      summary: Download binary content (owner only)
+      operationId: downloadObject
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/ObjectId"
+      responses:
+        "200":
+          description: Raw file bytes
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        "404":
+          description: Not found, expired, or access denied
+
+  /upload-sessions:
+    post:
+      tags: [UploadSessions]
+      summary: Create resumable upload session (CLI / advanced)
+      operationId: createUploadSession
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UploadSessionCreate"
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UploadSession"
+
+  /upload-sessions/{session_id}:
+    patch:
+      tags: [UploadSessions]
+      summary: Append chunk (must be contiguous per research.md)
+      operationId: appendUploadChunk
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: session_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: Upload-Offset
+          in: header
+          required: true
+          schema:
+            type: integer
+            minimum: 0
+          description: Next byte offset; chunks MUST be contiguous (FR-011).
+      requestBody:
+        required: true
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+      responses:
+        "204":
+          description: Chunk accepted
+        "409":
+          description: Offset mismatch or session invalid
+
+  /upload-sessions/{session_id}/complete:
+    post:
+      tags: [UploadSessions]
+      summary: Finalize session into StoredUploadObject
+      operationId: completeUploadSession
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: session_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StoredObjectMeta"
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  parameters:
+    ObjectId:
+      name: object_id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+
+  schemas:
+    RegisterRequest:
+      type: object
+      required: [login, password]
+      properties:
+        login:
+          type: string
+        password:
+          type: string
+          format: password
+
+    LoginRequest:
+      type: object
+      required: [login, password]
+      properties:
+        login:
+          type: string
+        password:
+          type: string
+          format: password
+
+    TokenResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+        token_type:
+          type: string
+          example: bearer
+
+    UserPublic:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        login:
+          type: string
+
+    StoredObjectMeta:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        original_filename:
+          type: string
+        byte_size:
+          type: integer
+          format: int64
+        created_at:
+          type: string
+          format: date-time
+        expires_at:
+          type: string
+          format: date-time
+
+    UploadSessionCreate:
+      type: object
+      required: [filename, total_size]
+      properties:
+        filename:
+          type: string
+        total_size:
+          type: integer
+          format: int64
+          maximum: 1000000000
+          description: Max 1 GB (1e9 bytes); configurable downward.
+
+    UploadSession:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        received_bytes:
+          type: integer
+          format: int64
+        expected_size:
+          type: integer
+          format: int64
