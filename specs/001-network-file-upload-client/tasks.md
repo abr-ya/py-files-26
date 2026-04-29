@@ -40,17 +40,17 @@ Paths follow [plan.md](./plan.md): `server/src/py_files_server/`, `frontend/stat
 
 **⚠️ CRITICAL**: Complete this phase before declaring any user story done.
 
-- [ ] T005 Implement environment-backed settings (`STORAGE_ROOT`, `JWT_SECRET`, `ALLOW_SELF_REGISTRATION`, `RETENTION_DAYS`, `MAX_UPLOAD_BYTES`) in `server/src/py_files_server/settings.py`
-- [ ] T006 Implement SQLAlchemy `engine`, session factory, and FastAPI dependency `get_db` in `server/src/py_files_server/db.py`
-- [ ] T007 Implement ORM models `User`, `StoredUploadObject`, `UploadSession` matching specs/001-network-file-upload-client/data-model.md in `server/src/py_files_server/models/` (split files OK under package `models/`)
-- [ ] T008 Implement startup schema creation or Alembic baseline migration so SQLite tables exist before routes run (`server/src/py_files_server/models/__init__.py` import side-effect or dedicated `server/src/py_files_server/migrate.py`)
-- [ ] T009 Implement password hashing/verification helpers (bcrypt) in `server/src/py_files_server/services/password.py`
-- [ ] T010 Implement JWT create/decode helpers and OAuth2-password style login expectations in `server/src/py_files_server/services/jwt.py`
-- [ ] T011 Implement filesystem helpers safe-join under `STORAGE_ROOT`, blob dirs, temp partial paths for upload sessions in `server/src/py_files_server/services/fs_storage.py`
-- [ ] T012 Implement TTL purge routine deleting expired `StoredUploadObject` rows and filesystem blobs (blob-first or row-first ordering per data-model validation notes) in `server/src/py_files_server/services/purge.py`
-- [ ] T013 Wire FastAPI app factory: include lifespan asyncio periodic TTL sweep, structured logging without logging file contents, mount `/api/v1` routers in `server/src/py_files_server/main.py`
-- [ ] T014 Implement FastAPI dependency `get_current_user` extracting Bearer JWT in `server/src/py_files_server/api/deps.py`
-- [ ] T015 Implement `/api/v1/auth/register` and `/api/v1/auth/login` per specs/001-network-file-upload-client/contracts/openapi.yaml with FR-010 gating self-registration in `server/src/py_files_server/api/routes/auth.py`
+- [x] T005 Implement environment-backed settings (`STORAGE_ROOT`, `JWT_SECRET`, `ALLOW_SELF_REGISTRATION`, `RETENTION_DAYS`, `MAX_UPLOAD_BYTES`) in `server/src/py_files_server/settings.py`
+- [x] T006 Implement SQLAlchemy `engine`, session factory, and FastAPI dependency `get_db` in `server/src/py_files_server/db.py`
+- [x] T007 Implement ORM models `User`, `StoredUploadObject`, `UploadSession` matching specs/001-network-file-upload-client/data-model.md in `server/src/py_files_server/models/` (split files OK under package `models/`)
+- [x] T008 Implement startup schema creation or Alembic baseline migration so SQLite tables exist before routes run (`server/src/py_files_server/models/__init__.py` import side-effect or dedicated `server/src/py_files_server/migrate.py`)
+- [x] T009 Implement password hashing/verification helpers (bcrypt) in `server/src/py_files_server/services/password.py`
+- [x] T010 Implement JWT create/decode helpers and OAuth2-password style login expectations in `server/src/py_files_server/services/jwt.py`
+- [x] T011 Implement filesystem helpers safe-join under `STORAGE_ROOT`, blob dirs, temp partial paths for upload sessions in `server/src/py_files_server/services/fs_storage.py`
+- [x] T012 Implement TTL purge routine deleting expired `StoredUploadObject` rows and filesystem blobs (blob-first or row-first ordering per data-model validation notes) in `server/src/py_files_server/services/purge.py`
+- [x] T013 Wire FastAPI app factory: include lifespan asyncio periodic TTL sweep, structured logging without logging file contents, mount `/api/v1` routers in `server/src/py_files_server/main.py`
+- [x] T014 Implement FastAPI dependency `get_current_user` extracting Bearer JWT in `server/src/py_files_server/api/deps.py`
+- [x] T015 Implement `/api/v1/auth/register` and `/api/v1/auth/login` per specs/001-network-file-upload-client/contracts/openapi.yaml with FR-010 gating self-registration in `server/src/py_files_server/api/routes/auth.py`
 
 **Checkpoint**: Database models exist; auth endpoints usable with JWT; TTL sweep hooked (may be no-op until objects exist).
 
