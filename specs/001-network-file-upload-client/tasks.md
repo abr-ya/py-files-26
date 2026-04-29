@@ -12,6 +12,8 @@ description: "Task list for Network File Upload Client MVP implementation"
 
 **Organization**: Phases follow user-story priorities from `spec.md` (US1 P1 → US2/US3 P2 → US4 P3 MAY deferred).
 
+**Delivery boundary (this PR / branch closure)**: Implements **Phase 1–3** only — tasks **`T001`–`T020`** (Setup, Foundational, browser MVP). Deferred work **`T021`–`T035`** lives in **[`specs/002-network-file-upload-follow-on/tasks.md`](../002-network-file-upload-follow-on/tasks.md)** for the next milestone.
+
 ## Format: `[ID] [P?] [Story] Description`
 
 - **[P]**: Can run in parallel (different files, no blocking deps inside phase)
@@ -74,58 +76,11 @@ Paths follow [plan.md](./plan.md): `server/src/py_files_server/`, `frontend/stat
 
 ---
 
-## Phase 4: User Story 2 — Authenticated upload from CLI with resume (Priority: P2)
+## Follow-on (deferred — next feature milestone)
 
-**Goal**: Resumable upload session flow (POST create, PATCH append with `Upload-Offset`, POST complete) per contracts and FR-011.
+Phases **4–7** and tasks **`T021`–`T035`** (CLI resume, download/list, OAuth MAY docs, polish) are **not** in scope for this increment.
 
-**Independent Test**: With API running, use CLI only: `pyfiles upload ./file.bin` interrupted mid-way, retry/resume completes without full resend.
-
-### Implementation for User Story 2
-
-- [ ] T021 [US2] Implement `POST /api/v1/upload-sessions`, `PATCH /api/v1/upload-sessions/{session_id}` (header `Upload-Offset`), `POST .../complete` per specs/001-network-file-upload-client/contracts/openapi.yaml in `server/src/py_files_server/api/routes/upload_sessions.py`
-- [ ] T022 [US2] Implement contiguous chunk append + received byte accounting + session state machine in `server/src/py_files_server/services/upload_session_service.py`
-- [ ] T023 [US2] Finalize session: promote to `StoredUploadObject`, compute optional sha256, delete temp partial in `server/src/py_files_server/services/upload_finalize.py`
-- [ ] T024 [US2] Implement CLI entry `python -m py_files_cli` argparse root in `clients/python/src/py_files_cli/__main__.py`
-- [ ] T025 [US2] Implement `clients/python/src/py_files_cli/commands/login.py` storing JWT from `/auth/login` in user config file under `~/.config/py-files/` (or cross-platform equivalent)
-- [ ] T026 [US2] Implement resumable upload driver using `requests` sessions, `Upload-Offset` loop, tqdm-optional progress in `clients/python/src/py_files_cli/commands/upload.py`
-
-**Checkpoint**: SC-006 measurable resumable CLI path available; no browser required to validate.
-
----
-
-## Phase 5: User Story 3 — Download previously uploaded files (Priority: P2)
-
-**Goal**: List owned objects metadata and download octet-stream bytes; deny others; TTL expiry message per FR-007 FR-008 FR-012.
-
-**Independent Test**: Upload via any path, then list + download checksum match; attempt other user ID returns 404/403 without leaking metadata.
-
-### Implementation for User Story 3
-
-- [ ] T027 [US3] Implement `GET /api/v1/objects` listing `StoredUploadObject` for current user in `server/src/py_files_server/api/routes/objects.py`
-- [ ] T028 [US3] Implement `GET /api/v1/objects/{object_id}` metadata and `GET /api/v1/objects/{object_id}/content` streaming download with ownership enforcement in `server/src/py_files_server/api/routes/objects.py`
-- [ ] T029 [US3] Extend `frontend/static/app.js` to list objects and trigger browser download via authenticated fetch/FileSaver pattern
-- [ ] T030 [US3] Implement `clients/python/src/py_files_cli/commands/download.py` writing file to disk with exit codes per spec SC-004
-
-**Checkpoint**: Round-trip upload → download satisfies SC-005 when checksum implemented.
-
----
-
-## Phase 6: User Story 4 — Optional Google sign-in (Priority: P3) MAY / Deferred
-
-**Goal**: Track MAY scope explicitly—OAuth not in MVP implementation per specs/001-network-file-upload-client/plan.md.
-
-- [ ] T031 [US4] Add short “OAuth deferred” subsection referencing FR-006 MAY to `specs/001-network-file-upload-client/plan.md` Summary or append **Deferred items** list (no runtime code until prioritized)
-
----
-
-## Phase 7: Polish & Cross-Cutting Concerns
-
-**Purpose**: Constitution Principle IV verification, OpenAPI parity, operator docs.
-
-- [ ] T032 Sync implemented routes with schemas by reconciling drift vs specs/001-network-file-upload-client/contracts/openapi.yaml (adjust YAML or code—single source of truth documented in commit)
-- [ ] T033 Add pytest integration covering login → multipart upload → list → download round-trip in `server/tests/integration/test_roundtrip.py`
-- [ ] T034 Add pytest covering TTL denial path using mocked clock or shortened retention env in `server/tests/integration/test_ttl_denial.py`
-- [ ] T035 Refresh runnable commands in specs/001-network-file-upload-client/quickstart.md against actual module/app paths after implementation
+→ **[`specs/002-network-file-upload-follow-on/spec.md`](../002-network-file-upload-follow-on/spec.md)** · **[`specs/002-network-file-upload-follow-on/tasks.md`](../002-network-file-upload-follow-on/tasks.md)**
 
 ---
 
@@ -134,13 +89,11 @@ Paths follow [plan.md](./plan.md): `server/src/py_files_server/`, `frontend/stat
 ```text
 Phase 1 (Setup)
     → Phase 2 (Foundational)
-        → Phase 3 [US1] Browser MVP  ─┐
-        → Phase 4 [US2] CLI resume    ├→ Phase 5 [US3] Download lists round-trip (needs StoredUploadObject from US1/US2)
-        → Phase 6 [US4] Docs-only MAY
-    → Phase 7 Polish (OpenAPI parity + integration tests)
+        → Phase 3 [US1] Browser MVP   ✅ this increment / PR
+        → specs/002 …                 Phase 4–7 (T021–T035)
 ```
 
-US2 can start after Foundational regardless of US3 but logically follows MVP browser upload; US3 requires objects existing—complete US1 minimum before US3 acceptance.
+Further sequencing for **`T021`–`T035`**: see **`specs/002-network-file-upload-follow-on/tasks.md`**.
 
 ---
 
@@ -148,20 +101,17 @@ US2 can start after Foundational regardless of US3 but logically follows MVP bro
 
 - After **T007**: model files under `models/` may be edited in parallel **if** developers coordinate FK import order—otherwise keep single assignee.
 - **T018** and **T019** (HTML + JS) can proceed in parallel once **T016** response contract is stable.
-- **T025** and **T026** can proceed in parallel after **T021–T023** backend session API is stable.
 
 ---
 
 ## Implementation Strategy
 
-1. Land **Phase 1–2** so auth + DB + TTL loop are real.  
-2. Ship **US1** as vertical slice (demonstrable demo).  
-3. Add **US2** resumable sessions + CLI upload.  
-4. Expose **US3** download/list + CLI download.  
-5. Document **US4** deferral; close with polish + integration tests + OpenAPI drift fix.
+1. Land **Phase 1–2** so auth + DB + TTL loop are real.
+2. Ship **US1** as vertical slice (demonstrable demo) — **this branch / PR**.
+3. Continue with **`specs/002-network-file-upload-follow-on/`** for US2–US4 and polish (**`T021`–`T035`**).
 
 ---
 
 ## Suggested MVP Scope
 
-First shippable increment: complete through **Phase 3 (US1)** plus minimal health check from Phase 2—delivers P1 browser upload path per spec.
+Increment merged under **`001-network-file-upload-client`**: complete through **Phase 3 (US1)** plus minimal health check from Phase 2 — P1 browser upload path. Full **Variant C** (download round-trip, CLI resume from original product framing) is tracked under **`002-network-file-upload-follow-on`**.

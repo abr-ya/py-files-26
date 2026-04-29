@@ -2,10 +2,15 @@
 
 **Feature Branch**: `001-network-file-upload-client`  
 **Created**: 2026-04-29  
-**Status**: Draft  
+**Status**: Accepted — incremental delivery (Phase 3 browser MVP shipped in repo; remaining stories deferred — see [`tasks.md`](./tasks.md), [`specs/002-network-file-upload-follow-on/`](../002-network-file-upload-follow-on/spec.md))
+
 **Input**: User description: "We are building a client for sending files over the network—via a browser or a Python script, from the command line or with a UI. The frontend and backend may be implemented in one or more languages. Authentication should be simple: login plus password is sufficient; Google accounts may be added optionally."
 
 ## Clarifications
+
+### Increment scope (repository milestone)
+
+This merge closes **Phase 3** (**User Story 1** — browser upload). Stories **2–4** and tasks **`T021`–`T035`** move to **`specs/002-network-file-upload-follow-on/`**. Until that work ships, **Variant C** (download round-trip + CLI resume) from the Q&A below is **not** fully satisfied—only browser upload is in scope.
 
 ### Session 2026-04-29
 
