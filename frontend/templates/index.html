@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>py-files — upload</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}" />
+  </head>
+  <body>
+    <main class="wrap">
+      <h1>Network file upload</h1>
+
+      <section class="panel" aria-labelledby="auth-heading">
+        <h2 id="auth-heading">Sign in</h2>
+        <form id="login-form" class="grid">
+          <label>
+            Login
+            <input type="text" name="login" autocomplete="username" required />
+          </label>
+          <label>
+            Password
+            <input type="password" name="password" autocomplete="current-password" required />
+          </label>
+          <button type="submit">Sign in</button>
+        </form>
+
+        <div id="register-block">
+          <p>No account yet? Register when enabled by the server.</p>
+          <form id="register-form" class="grid">
+            <label>
+              Login
+              <input type="text" name="login" autocomplete="username" required />
+            </label>
+            <label>
+              Password
+              <input type="password" name="password" autocomplete="new-password" required />
+            </label>
+            <button type="submit">Register</button>
+          </form>
+        </div>
+
+        <p id="auth-status" class="status" role="status"></p>
+      </section>
+
+      <section class="panel" aria-labelledby="upload-heading">
+        <h2 id="upload-heading">Upload</h2>
+        <form id="upload-form">
+          <label class="file-row">
+            File
+            <input id="file-input" type="file" name="file" multiple />
+          </label>
+          <button type="submit" id="upload-btn">Upload</button>
+        </form>
+        <div id="progress-wrap" hidden>
+          <label for="progress-bar">Progress</label>
+          <progress id="progress-bar" max="100" value="0"></progress>
+          <span id="progress-label"></span>
+        </div>
+        <pre id="upload-log" class="log" aria-live="polite"></pre>
+      </section>
+    </main>
+    <script src="{{ url_for('static', path='app.js') }}" defer></script>
+  </body>
+</html>

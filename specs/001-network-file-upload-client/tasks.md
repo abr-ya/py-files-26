@@ -64,11 +64,11 @@ Paths follow [plan.md](./plan.md): `server/src/py_files_server/`, `frontend/stat
 
 ### Implementation for User Story 1
 
-- [ ] T016 [US1] Implement `POST /api/v1/objects` multipart upload handling streaming to disk and persisting `StoredUploadObject` with `expires_at` from retention settings in `server/src/py_files_server/api/routes/objects.py`
-- [ ] T017 [US1] Enforce `MAX_UPLOAD_BYTES` and return FR-009-compatible errors before/during ingest in `server/src/py_files_server/api/routes/objects.py`
-- [ ] T018 [US1] Add minimal login/register/upload HTML shell per FR-004 progress needs in `frontend/templates/index.html`
-- [ ] T019 [US1] Implement vanilla JS auth + multipart upload + progress/fetch error display (no React/Vue) in `frontend/static/app.js`
-- [ ] T020 [US1] Serve static/templates from FastAPI (`StaticFiles`, `Jinja2Templates`) wired in `server/src/py_files_server/main.py`
+- [x] T016 [US1] Implement `POST /api/v1/objects` multipart upload handling streaming to disk and persisting `StoredUploadObject` with `expires_at` from retention settings in `server/src/py_files_server/api/routes/objects.py`
+- [x] T017 [US1] Enforce `MAX_UPLOAD_BYTES` and return FR-009-compatible errors before/during ingest in `server/src/py_files_server/api/routes/objects.py`
+- [x] T018 [US1] Add minimal login/register/upload HTML shell per FR-004 progress needs in `frontend/templates/index.html`
+- [x] T019 [US1] Implement vanilla JS auth + multipart upload + progress/fetch error display (no React/Vue) in `frontend/static/app.js`
+- [x] T020 [US1] Serve static/templates from FastAPI (`StaticFiles`, `Jinja2Templates`) wired in `server/src/py_files_server/main.py`
 
 **Checkpoint**: Story 1 acceptance scenarios in specs/001-network-file-upload-client/spec.md are demonstrable via browser only.
 

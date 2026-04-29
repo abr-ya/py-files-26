@@ -5,7 +5,23 @@ Phase 2+ may add ``ASGITransport`` fixtures once ``py_files_server.main:app`` ex
 
 from __future__ import annotations
 
+import atexit
 import os
+import shutil
+import tempfile
+
+_pytest_home = tempfile.mkdtemp(prefix="py-files-pytest-")
+os.environ["DATABASE_URL"] = f"sqlite:///{_pytest_home}/db.sqlite"
+os.environ["STORAGE_ROOT"] = f"{_pytest_home}/storage"
+os.environ["JWT_SECRET"] = "pytest-secret-fixed"
+
+
+def _cleanup_pytest_home() -> None:
+    shutil.rmtree(_pytest_home, ignore_errors=True)
+
+
+atexit.register(_cleanup_pytest_home)
+
 from collections.abc import AsyncIterator
 
 import pytest

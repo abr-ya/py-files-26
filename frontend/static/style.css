@@ -1,0 +1,104 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  line-height: 1.45;
+  color: #1a1a1a;
+  background: #f6f7f9;
+}
+
+.wrap {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+h1 {
+  font-size: 1.35rem;
+  font-weight: 600;
+}
+
+.panel {
+  background: #fff;
+  border: 1px solid #dfe3e8;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.grid {
+  display: grid;
+  gap: 0.65rem;
+  max-width: 22rem;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.875rem;
+}
+
+input[type="text"],
+input[type="password"] {
+  padding: 0.4rem 0.5rem;
+  border: 1px solid #c5ccd6;
+  border-radius: 4px;
+}
+
+button {
+  cursor: pointer;
+  padding: 0.45rem 0.75rem;
+  border-radius: 4px;
+  border: 1px solid #2563eb;
+  background: #2563eb;
+  color: #fff;
+  font-weight: 500;
+}
+
+button:hover {
+  background: #1d4ed8;
+}
+
+.file-row input[type="file"] {
+  margin-top: 0.35rem;
+}
+
+.status {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+}
+
+.status.ok {
+  color: #15803d;
+}
+
+.status.err {
+  color: #b91c1c;
+}
+
+#progress-wrap {
+  margin-top: 0.75rem;
+}
+
+progress {
+  width: 100%;
+  max-width: 22rem;
+  height: 0.65rem;
+}
+
+.log {
+  margin-top: 0.75rem;
+  padding: 0.65rem;
+  background: #f1f5f9;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}

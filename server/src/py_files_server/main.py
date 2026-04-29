@@ -8,16 +8,23 @@ from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager, suppress
 from pathlib import Path
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.routing import APIRouter
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 
 from py_files_server.api.routes import auth as auth_routes
+from py_files_server.api.routes import objects as objects_routes
 from py_files_server.db import SessionLocal, init_db
 from py_files_server.services.fs_storage import ensure_storage_layout
 from py_files_server.services.purge import purge_expired_upload_objects
 from py_files_server.settings import Settings, get_settings
 
 logger = logging.getLogger(__name__)
+
+_REPO_ROOT = Path(__file__).resolve().parents[3]
+_FRONTEND_STATIC = _REPO_ROOT / "frontend" / "static"
+_FRONTEND_TEMPLATES = _REPO_ROOT / "frontend" / "templates"
 
 
 async def _purge_scheduler(settings: Settings) -> None:
@@ -69,7 +76,18 @@ app = FastAPI(title="py-files-server", lifespan=lifespan)
 
 api_router = APIRouter(prefix="/api/v1")
 api_router.include_router(auth_routes.router, prefix="/auth")
+api_router.include_router(objects_routes.router, prefix="/objects")
 app.include_router(api_router)
+
+templates = Jinja2Templates(directory=str(_FRONTEND_TEMPLATES))
+if _FRONTEND_STATIC.is_dir():
+    app.mount("/static", StaticFiles(directory=str(_FRONTEND_STATIC)), name="static")
+
+
+@app.get("/")
+def index(request: Request):
+    """Serve browser UI shell."""
+    return templates.TemplateResponse(request, "index.html")
 
 
 @app.get("/health")

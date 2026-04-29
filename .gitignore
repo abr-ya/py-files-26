@@ -42,5 +42,10 @@ Thumbs.db
 .env.local
 *.pem
 
-# Example local blob dir when STORAGE_ROOT points under repo (uncomment if needed):
+# Local runtime data (default DATABASE_URL / STORAGE_ROOT when cwd is server/)
+server/var/
+# Defaults when process cwd is repo root (./var/...)
+/var/
+
+# Example local blob dir when STORAGE_ROOT points elsewhere under repo (optional):
 # var/uploads/
