@@ -27,10 +27,10 @@ Paths follow [plan.md](./plan.md): `server/src/py_files_server/`, `frontend/stat
 
 **Purpose**: Repository skeleton matching the implementation plan.
 
-- [ ] T001 Create directory layout `server/src/py_files_server/{api/routes,models,services}`, `server/tests/`, `frontend/static/`, `frontend/templates/`, `clients/python/src/py_files_cli/commands/` per specs/001-network-file-upload-client/plan.md
-- [ ] T002 Add `server/pyproject.toml` (or `server/requirements.txt`) with FastAPI, Uvicorn, SQLAlchemy, pydantic-settings, passlib[bcrypt], python-jose[cryptography], python-multipart, httpx, pytest, pytest-asyncio as listed in specs/001-network-file-upload-client/plan.md
-- [ ] T003 Add `clients/python/pyproject.toml` declaring package `py-files-cli` (or `py_files_cli`) with runtime dependency `requests` and console script entrypoint per specs/001-network-file-upload-client/plan.md
-- [ ] T004 Add `server/tests/conftest.py` with pytest-asyncio configuration and optional httpx `AsyncClient` fixture factory targeted at `http://127.0.0.1:8000` for API tests
+- [x] T001 Create directory layout `server/src/py_files_server/{api/routes,models,services}`, `server/tests/`, `frontend/static/`, `frontend/templates/`, `clients/python/src/py_files_cli/commands/` per specs/001-network-file-upload-client/plan.md
+- [x] T002 Add `server/pyproject.toml` (or `server/requirements.txt`) with FastAPI, Uvicorn, SQLAlchemy, pydantic-settings, passlib[bcrypt], python-jose[cryptography], python-multipart, httpx, pytest, pytest-asyncio as listed in specs/001-network-file-upload-client/plan.md
+- [x] T003 Add `clients/python/pyproject.toml` declaring package `py-files-cli` (or `py_files_cli`) with runtime dependency `requests` and console script entrypoint per specs/001-network-file-upload-client/plan.md
+- [x] T004 Add `server/tests/conftest.py` with pytest-asyncio configuration and optional httpx `AsyncClient` fixture factory targeted at `http://127.0.0.1:8000` for API tests
 
 ---
 
