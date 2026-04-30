@@ -51,7 +51,7 @@ description: "Deferred tasks after Phase 3 browser MVP (moved from 001-network-f
 
 **Goal**: Track MAY scope explicitly—OAuth not in MVP implementation per specs/001-network-file-upload-client/plan.md.
 
-- [ ] T031 [US4] Add short “OAuth deferred” subsection referencing FR-006 MAY to `specs/001-network-file-upload-client/plan.md` Summary or append **Deferred items** list (no runtime code until prioritized)
+- [x] T031 [US4] Add short “OAuth deferred” subsection referencing FR-006 MAY to `specs/001-network-file-upload-client/plan.md` Summary or append **Deferred items** list (no runtime code until prioritized)
 
 ---
 
@@ -59,10 +59,10 @@ description: "Deferred tasks after Phase 3 browser MVP (moved from 001-network-f
 
 **Purpose**: Constitution Principle IV verification, OpenAPI parity, operator docs.
 
-- [ ] T032 Sync implemented routes with schemas by reconciling drift vs specs/001-network-file-upload-client/contracts/openapi.yaml (adjust YAML or code—single source of truth documented in commit)
-- [ ] T033 Add pytest integration covering login → multipart upload → list → download round-trip in `server/tests/integration/test_roundtrip.py`
-- [ ] T034 Add pytest covering TTL denial path using mocked clock or shortened retention env in `server/tests/integration/test_ttl_denial.py`
-- [ ] T035 Refresh runnable commands in specs/001-network-file-upload-client/quickstart.md against actual module/app paths after implementation
+- [x] T032 Sync implemented routes with schemas by reconciling drift vs specs/001-network-file-upload-client/contracts/openapi.yaml (adjust YAML or code—single source of truth documented in commit)
+- [x] T033 Add pytest integration covering login → multipart upload → list → download round-trip in `server/tests/integration/test_roundtrip.py`
+- [x] T034 Add pytest covering TTL denial path using mocked clock or shortened retention env in `server/tests/integration/test_ttl_denial.py`
+- [x] T035 Refresh runnable commands in specs/001-network-file-upload-client/quickstart.md against actual module/app paths after implementation
 
 ---
 

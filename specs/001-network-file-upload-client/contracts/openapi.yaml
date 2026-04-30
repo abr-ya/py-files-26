@@ -39,6 +39,8 @@ paths:
                 $ref: "#/components/schemas/UserPublic"
         "403":
           description: Registration disabled
+        "409":
+          description: Login already registered
 
   /auth/login:
     post:
@@ -77,6 +79,8 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/StoredObjectMeta"
+        "401":
+          description: Missing or invalid bearer token
     post:
       tags: [Objects]
       summary: Simple single-shot upload (browser / small files)
@@ -89,6 +93,7 @@ paths:
           multipart/form-data:
             schema:
               type: object
+              required: [file]
               properties:
                 file:
                   type: string
@@ -100,6 +105,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/StoredObjectMeta"
+        "401":
+          description: Missing or invalid bearer token
         "413":
           description: File too large
 
@@ -114,10 +121,13 @@ paths:
         - $ref: "#/components/parameters/ObjectId"
       responses:
         "200":
+          description: Stored object metadata for the authenticated owner
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/StoredObjectMeta"
+        "401":
+          description: Missing or invalid bearer token
         "404":
           description: Not found or access denied
 
@@ -138,6 +148,8 @@ paths:
               schema:
                 type: string
                 format: binary
+        "401":
+          description: Missing or invalid bearer token
         "404":
           description: Not found, expired, or access denied
 
@@ -156,10 +168,15 @@ paths:
               $ref: "#/components/schemas/UploadSessionCreate"
       responses:
         "201":
+          description: Upload session created; received_bytes starts at 0 with an empty partial on disk.
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/UploadSession"
+        "401":
+          description: Missing or invalid bearer token
+        "413":
+          description: Declared size exceeds deployment limit
 
   /upload-sessions/{session_id}:
     get:
@@ -182,6 +199,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UploadSession"
+        "401":
+          description: Missing or invalid bearer token
         "404":
           description: Not found or not owned by caller
     patch:
@@ -214,8 +233,12 @@ paths:
       responses:
         "204":
           description: Chunk accepted
+        "401":
+          description: Missing or invalid bearer token
+        "404":
+          description: Upload session not found or not owned by caller
         "409":
-          description: Offset mismatch or session invalid
+          description: Offset mismatch, session inactive, oversize chunk, or other contract violation
 
   /upload-sessions/{session_id}/complete:
     post:
@@ -233,10 +256,17 @@ paths:
             format: uuid
       responses:
         "201":
+          description: Object finalized from session; temporary partial removed server-side
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/StoredObjectMeta"
+        "401":
+          description: Missing or invalid bearer token
+        "404":
+          description: Upload session not found or not owned by caller
+        "409":
+          description: Incomplete session, missing partial on disk, or invalid state for completion
 
 components:
   securitySchemes:

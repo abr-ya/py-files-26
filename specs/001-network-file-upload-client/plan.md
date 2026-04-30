@@ -74,7 +74,7 @@ server/
 frontend/
 ├── static/
 │   ├── app.js
-│   └── styles.css
+│   └── style.css
 └── templates/
     └── index.html               # minimal shell – fetch JSON APIs
 
@@ -92,6 +92,16 @@ tests/
 ```
 
 **Structure Decision**: Split **`server/`**, **`frontend/` static assets**, and **`clients/python/`** packages so FastAPI backend + CLI evolve independently while sharing OpenAPI contracts—matches constitution separation (CLI deps minimal).
+
+## Deferred / optional scope (tracked)
+
+### Google OAuth sign-in (**FR‑006**, User Story **4** — **MAY**)
+
+**Status**: **not implemented** in the current codebase path. Authentication remains **login + password** plus JWT from `/api/v1/auth/login`; the `User.external_google_sub` column is reserved and unused until a dedicated OAuth milestone.
+
+**Product rule (FR‑006)**: until OAuth is wired and tested, deployments **must not** expose a misleading “Sign in with Google” (or equivalent) control. Document unavailability for operators and end users; Stories **1–3** (browser/CLI upload and download) stay valid on password auth only.
+
+**When OAuth is prioritized**: extend `contracts/openapi.yaml` with concrete provider routes and token exchange, implement callback/TLS/CSRF/session handling per constitution Principles **5–11**, add regression tests for OAuth plus existing upload/list/download paths, and capture rollout/rollback in this plan.
 
 ## Complexity Tracking
 
