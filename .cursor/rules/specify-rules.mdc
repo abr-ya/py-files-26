@@ -3,6 +3,7 @@ alwaysApply: true
 ---
 
 <!-- SPECKIT START -->
-For additional context about technologies to be used, project structure,
-shell commands, and other important information, read the current plan
+Read `specs/001-network-file-upload-client/plan.md` for technical context: stack (FastAPI, SQLite,
+filesystem blobs), planned repo layout (`server/`, `frontend/static`, `clients/python`), OpenAPI in
+`specs/001-network-file-upload-client/contracts/openapi.yaml`, and constitution-aligned constraints.
 <!-- SPECKIT END -->
