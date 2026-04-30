@@ -162,6 +162,28 @@ paths:
                 $ref: "#/components/schemas/UploadSession"
 
   /upload-sessions/{session_id}:
+    get:
+      tags: [UploadSessions]
+      summary: Get resumable session progress (owner only)
+      operationId: getUploadSession
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: session_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Current session offsets
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UploadSession"
+        "404":
+          description: Not found or not owned by caller
     patch:
       tags: [UploadSessions]
       summary: Append chunk (must be contiguous per research.md)

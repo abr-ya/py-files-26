@@ -42,6 +42,7 @@ Tracks partial uploads until promotion to `StoredUploadObject`.
 |-------|------|------|
 | `id` | UUID PK | Session token |
 | `owner_user_id` | FK → User | Authenticated creator |
+| `original_filename` | str | User-visible name propagated to finalized object |
 | `expected_size` | int | Declared total bytes ≤ 1 GB |
 | `received_bytes` | int | Must advance contiguously |
 | `partial_storage_path` | str | Temp file |

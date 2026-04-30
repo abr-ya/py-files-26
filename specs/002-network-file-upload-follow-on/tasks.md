@@ -19,12 +19,12 @@ description: "Deferred tasks after Phase 3 browser MVP (moved from 001-network-f
 
 ### Implementation for User Story 2
 
-- [ ] T021 [US2] Implement `POST /api/v1/upload-sessions`, `PATCH /api/v1/upload-sessions/{session_id}` (header `Upload-Offset`), `POST .../complete` per specs/001-network-file-upload-client/contracts/openapi.yaml in `server/src/py_files_server/api/routes/upload_sessions.py`
-- [ ] T022 [US2] Implement contiguous chunk append + received byte accounting + session state machine in `server/src/py_files_server/services/upload_session_service.py`
-- [ ] T023 [US2] Finalize session: promote to `StoredUploadObject`, compute optional sha256, delete temp partial in `server/src/py_files_server/services/upload_finalize.py`
-- [ ] T024 [US2] Implement CLI entry `python -m py_files_cli` argparse root in `clients/python/src/py_files_cli/__main__.py`
-- [ ] T025 [US2] Implement `clients/python/src/py_files_cli/commands/login.py` storing JWT from `/auth/login` in user config file under `~/.config/py-files/` (or cross-platform equivalent)
-- [ ] T026 [US2] Implement resumable upload driver using `requests` sessions, `Upload-Offset` loop, tqdm-optional progress in `clients/python/src/py_files_cli/commands/upload.py`
+- [x] T021 [US2] Implement `POST /api/v1/upload-sessions`, `PATCH /api/v1/upload-sessions/{session_id}` (header `Upload-Offset`), `POST .../complete` per specs/001-network-file-upload-client/contracts/openapi.yaml in `server/src/py_files_server/api/routes/upload_sessions.py`
+- [x] T022 [US2] Implement contiguous chunk append + received byte accounting + session state machine in `server/src/py_files_server/services/upload_session_service.py`
+- [x] T023 [US2] Finalize session: promote to `StoredUploadObject`, compute optional sha256, delete temp partial in `server/src/py_files_server/services/upload_finalize.py`
+- [x] T024 [US2] Implement CLI entry `python -m py_files_cli` argparse root in `clients/python/src/py_files_cli/__main__.py`
+- [x] T025 [US2] Implement `clients/python/src/py_files_cli/commands/login.py` storing JWT from `/auth/login` in user config file under `~/.config/py-files/` (or cross-platform equivalent)
+- [x] T026 [US2] Implement resumable upload driver using `requests` sessions, `Upload-Offset` loop, tqdm-optional progress in `clients/python/src/py_files_cli/commands/upload.py`
 
 **Checkpoint**: SC-006 measurable resumable CLI path available; no browser required to validate.
 
