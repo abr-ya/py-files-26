@@ -58,6 +58,24 @@
         </div>
         <pre id="upload-log" class="log" aria-live="polite"></pre>
       </section>
+
+      <section class="panel" aria-labelledby="files-heading">
+        <h2 id="files-heading">Your files</h2>
+        <div class="file-toolbar">
+          <button type="button" id="files-refresh">Refresh list</button>
+        </div>
+        <table class="file-table" aria-label="Stored objects">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Size</th>
+              <th>Expires (UTC)</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="files-tbody"></tbody>
+        </table>
+      </section>
     </main>
     <script src="{{ url_for('static', path='app.js') }}" defer></script>
   </body>

@@ -1,4 +1,4 @@
-"""``pyfiles`` CLI entry — dispatch ``login`` and ``upload`` subcommands."""
+"""``pyfiles`` CLI entry — dispatch login / upload / download."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ import sys
 def main() -> None:
     if len(sys.argv) < 2:
         print(
-            "usage: pyfiles {login|upload} ...",
+            "usage: pyfiles {login|upload|download} ...",
             file=sys.stderr,
         )
         print(
@@ -17,6 +17,10 @@ def main() -> None:
         )
         print(
             "  pyfiles upload [--resume] [--chunk-size N] FILE",
+            file=sys.stderr,
+        )
+        print(
+            "  pyfiles download OBJECT_UUID [-o PATH]",
             file=sys.stderr,
         )
         sys.exit(2)
@@ -30,6 +34,10 @@ def main() -> None:
         from py_files_cli.commands.upload import run as upload_run
 
         sys.exit(upload_run(rest))
+    if cmd == "download":
+        from py_files_cli.commands.download import run as download_run
+
+        sys.exit(download_run(rest))
     print(f"unknown command: {cmd}", file=sys.stderr)
     sys.exit(2)
 

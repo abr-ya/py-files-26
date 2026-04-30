@@ -102,3 +102,69 @@ progress {
   white-space: pre-wrap;
   word-break: break-word;
 }
+
+.file-toolbar {
+  margin-bottom: 0.5rem;
+}
+
+.file-toolbar button {
+  background: #0f766e;
+  border-color: #0f766e;
+}
+
+.file-toolbar button:hover {
+  background: #0d9488;
+  border-color: #0d9488;
+}
+
+.file-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.file-table th,
+.file-table td {
+  text-align: left;
+  padding: 0.4rem 0.5rem;
+  border-bottom: 1px solid #e5e7eb;
+  vertical-align: middle;
+}
+
+.file-table th {
+  color: #64748b;
+  font-weight: 500;
+}
+
+.file-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.file-actions {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.file-actions button {
+  padding: 0.35rem 0.55rem;
+  font-size: 0.8rem;
+}
+
+.file-muted {
+  color: #64748b;
+}
+
+.file-name-cell {
+  max-width: 14rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 540px) {
+  .file-table th:nth-child(2),
+  .file-table td:nth-child(2),
+  .file-table th:nth-child(3),
+  .file-table td:nth-child(3) {
+    display: none;
+  }
+}

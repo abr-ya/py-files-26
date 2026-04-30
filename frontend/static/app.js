@@ -11,6 +11,8 @@
   const progressBar = document.getElementById("progress-bar");
   const progressLabel = document.getElementById("progress-label");
   const uploadLog = document.getElementById("upload-log");
+  const filesTbody = document.getElementById("files-tbody");
+  const filesRefreshBtn = document.getElementById("files-refresh");
 
   function log(line) {
     const ts = new Date().toISOString();
@@ -34,6 +36,146 @@
     else sessionStorage.removeItem(TOKEN_KEY);
   }
 
+  function baseName(fn) {
+    const s = String(fn || "");
+    const i = Math.max(s.lastIndexOf("/"), s.lastIndexOf("\\"));
+    const out = i >= 0 ? s.slice(i + 1) : s;
+    return out.trim() ? out : "download.bin";
+  }
+
+  function renderPlaceholderRow(message, isMuted) {
+    const tr = document.createElement("tr");
+    const td = document.createElement("td");
+    td.colSpan = 4;
+    td.textContent = message;
+    if (isMuted) td.classList.add("file-muted");
+    tr.appendChild(td);
+    filesTbody.appendChild(tr);
+  }
+
+  async function refreshFileList() {
+    const token = getToken();
+    if (!token) {
+      filesTbody.textContent = "";
+      renderPlaceholderRow("Sign in to see your uploaded files.", true);
+      return;
+    }
+    try {
+      const r = await fetch("/api/v1/objects", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const body = await r.json().catch(() => []);
+      filesTbody.textContent = "";
+      if (!r.ok) {
+        const msg =
+          typeof body.detail === "string"
+            ? body.detail
+            : `List failed (${r.status})`;
+        renderPlaceholderRow(msg, false);
+        return;
+      }
+      if (!Array.isArray(body) || body.length === 0) {
+        renderPlaceholderRow("No stored files yet.", true);
+        return;
+      }
+      for (let i = 0; i < body.length; i += 1) {
+        const o = body[i];
+        const tr = document.createElement("tr");
+        const nameCell = document.createElement("td");
+        nameCell.className = "file-name-cell";
+        nameCell.title = o.original_filename;
+        nameCell.textContent = baseName(o.original_filename);
+        tr.appendChild(nameCell);
+
+        const sizeCell = document.createElement("td");
+        sizeCell.textContent = String(o.byte_size);
+        tr.appendChild(sizeCell);
+
+        const expCell = document.createElement("td");
+        expCell.textContent = String(o.expires_at || "");
+        expCell.title = expCell.textContent;
+        tr.appendChild(expCell);
+
+        const act = document.createElement("td");
+        act.className = "file-actions";
+        const bn = document.createElement("button");
+        bn.type = "button";
+        bn.textContent = "Download";
+        bn.dataset.action = "download";
+        bn.dataset.id = String(o.id);
+        bn.dataset.name = String(o.original_filename);
+        act.appendChild(bn);
+        tr.appendChild(act);
+
+        filesTbody.appendChild(tr);
+      }
+    } catch (err) {
+      filesTbody.textContent = "";
+      renderPlaceholderRow(
+        err instanceof Error ? err.message : String(err),
+        false,
+      );
+    }
+  }
+
+  async function downloadObject(id, displayName, token) {
+    const safeId = encodeURIComponent(id);
+    const r = await fetch(`/api/v1/objects/${safeId}/content`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (!r.ok) {
+      let detail = "";
+      try {
+        const j = await r.json();
+        detail = typeof j.detail === "string" ? j.detail : "";
+      } catch {
+        detail = "";
+      }
+      throw new Error(detail || `Download failed (${r.status})`);
+    }
+    const blob = await r.blob();
+    const url = URL.createObjectURL(blob);
+    try {
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = baseName(displayName);
+      a.rel = "noopener";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    } finally {
+      URL.revokeObjectURL(url);
+    }
+  }
+
+  filesRefreshBtn.addEventListener("click", () => {
+    void refreshFileList();
+  });
+
+  filesTbody.addEventListener("click", (ev) => {
+    const btn = ev.target.closest("button[data-action='download']");
+    if (!btn) return;
+    const token = getToken();
+    if (!token) {
+      log("Download blocked: sign in first.");
+      return;
+    }
+    const oid = btn.getAttribute("data-id");
+    const oname = btn.getAttribute("data-name") || "download.bin";
+    log(`Downloading… ${oname} (id=${oid})`);
+    void downloadObject(oid, oname, token)
+      .then(() => {
+        log(`Download started: ${oname}`);
+      })
+      .catch((err) => {
+        log(
+          `Download failed (${oname}): ${
+            err instanceof Error ? err.message : String(err)
+          }`,
+        );
+      });
+  });
+
   loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     const fd = new FormData(loginForm);
@@ -55,6 +197,7 @@
       setToken(body.access_token);
       setAuthStatus("Signed in.", true);
       log(`Signed in as ${login}`);
+      void refreshFileList();
     } catch (err) {
       setAuthStatus(err instanceof Error ? err.message : String(err), false);
       setToken(null);
@@ -158,6 +301,7 @@
       try {
         const meta = await uploadOne(file, token);
         log(`OK ${file.name} → id=${meta.id} size=${meta.byte_size}`);
+        void refreshFileList();
       } catch (err) {
         log(`FAIL ${file.name}: ${err instanceof Error ? err.message : String(err)}`);
       }
@@ -169,4 +313,5 @@
   if (getToken()) {
     setAuthStatus("Session restored (token in memory).", true);
   }
+  void refreshFileList();
 })();

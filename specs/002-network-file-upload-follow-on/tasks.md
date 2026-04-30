@@ -38,10 +38,10 @@ description: "Deferred tasks after Phase 3 browser MVP (moved from 001-network-f
 
 ### Implementation for User Story 3
 
-- [ ] T027 [US3] Implement `GET /api/v1/objects` listing `StoredUploadObject` for current user in `server/src/py_files_server/api/routes/objects.py`
-- [ ] T028 [US3] Implement `GET /api/v1/objects/{object_id}` metadata and `GET /api/v1/objects/{object_id}/content` streaming download with ownership enforcement in `server/src/py_files_server/api/routes/objects.py`
-- [ ] T029 [US3] Extend `frontend/static/app.js` to list objects and trigger browser download via authenticated fetch/FileSaver pattern
-- [ ] T030 [US3] Implement `clients/python/src/py_files_cli/commands/download.py` writing file to disk with exit codes per spec SC-004
+- [x] T027 [US3] Implement `GET /api/v1/objects` listing `StoredUploadObject` for current user in `server/src/py_files_server/api/routes/objects.py`
+- [x] T028 [US3] Implement `GET /api/v1/objects/{object_id}` metadata and `GET /api/v1/objects/{object_id}/content` streaming download with ownership enforcement in `server/src/py_files_server/api/routes/objects.py`
+- [x] T029 [US3] Extend `frontend/static/app.js` to list objects and trigger browser download via authenticated fetch/FileSaver pattern
+- [x] T030 [US3] Implement `clients/python/src/py_files_cli/commands/download.py` writing file to disk with exit codes per spec SC-004
 
 **Checkpoint**: Round-trip upload → download satisfies SC-005 when checksum implemented.
 
