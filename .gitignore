@@ -44,6 +44,7 @@ Thumbs.db
 
 # Local runtime data (default DATABASE_URL / STORAGE_ROOT when cwd is server/)
 server/var/
+server/var_local/
 # Defaults when process cwd is repo root (./var/...)
 /var/
 
