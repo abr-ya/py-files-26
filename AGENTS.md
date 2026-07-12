@@ -12,6 +12,10 @@ This repository contains a small network file upload system split by surface:
 
 Keep changes near the surface they affect. Update specs or docs when behavior, APIs, or deployment steps change.
 
+## OpenSpec & Token Discipline
+
+Before OpenSpec, backlog, or planning work, follow `docs/agent-openspec-token-guide.md`. In short: start from live repo state, preserve existing feature numbering, read only the smallest useful files, keep chat updates concise, and store durable planning state in repository markdown rather than long chat messages.
+
 ## Build, Test, and Development Commands
 
 Use Python 3.11 or newer.
