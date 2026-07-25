@@ -8,8 +8,8 @@
 
 ## CLI
 
-- [ ] T024 Implement the `pyfiles` argparse root in `clients/python/src/py_files_cli/__main__.py`, including global `--base-url` resolution.
-- [ ] T025 Implement `clients/python/src/py_files_cli/commands/login.py` to authenticate against the configured server and store the JWT plus normalized base URL in user config.
+- [x] T024 Implement the `pyfiles` argparse root in `clients/python/src/py_files_cli/__main__.py`, including global `--base-url` resolution.
+- [x] T025 Implement `clients/python/src/py_files_cli/commands/login.py` to authenticate against the configured server and store the JWT plus normalized base URL in user config.
 - [ ] T026 Implement `clients/python/src/py_files_cli/commands/upload.py` with resumable upload-session create/append/complete flow, progress output, interruption-safe retry metadata, and clear exit codes.
 
 ## Tests And Docs
