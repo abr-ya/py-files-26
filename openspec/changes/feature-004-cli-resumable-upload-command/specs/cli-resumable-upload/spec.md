@@ -1,17 +1,10 @@
-# CLI Resumable Upload Delta
+# CLI Resumable Upload Command Delta
 
 ## ADDED Requirements
 
-### Requirement: Configurable CLI Server Target
+### Requirement: CLI Resumable Upload Command
 
-The CLI MUST allow a user running on a local machine to target a py-files server by providing an API base URL.
-
-#### Scenario: Login with explicit server URL
-
-- **GIVEN** the py-files API is available at a network URL
-- **WHEN** the user runs `pyfiles --base-url <url> login` with valid credentials
-- **THEN** the CLI authenticates against that server
-- **AND** stores the normalized base URL and access token in local user config for later commands
+The CLI MUST upload local files to a configured py-files server using resumable upload sessions and contiguous byte offsets.
 
 #### Scenario: Upload uses saved server URL
 
@@ -26,10 +19,6 @@ The CLI MUST allow a user running on a local machine to target a py-files server
 - **WHEN** the user runs `pyfiles upload ./file.bin` without `--base-url`
 - **THEN** the CLI exits before reading file bytes
 - **AND** reports that `--base-url` or prior login configuration is required
-
-### Requirement: Resumable CLI Upload Sessions
-
-The CLI and server MUST support resumable upload for authenticated CLI uploads using upload sessions and contiguous byte offsets.
 
 #### Scenario: Create and complete upload session
 
@@ -50,5 +39,5 @@ The CLI and server MUST support resumable upload for authenticated CLI uploads u
 
 - **GIVEN** the CLI sends a chunk with an `Upload-Offset` that does not match the session's received byte count
 - **WHEN** the server rejects the chunk
-- **THEN** the response indicates an offset mismatch
-- **AND** the CLI reports or uses the server's expected offset for retry
+- **THEN** the CLI reports or uses the server's expected offset for retry
+

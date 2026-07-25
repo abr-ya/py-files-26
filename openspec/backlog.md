@@ -17,35 +17,41 @@ This backlog preserves the existing specification numbering while the project mo
 
 ## Next Candidate Change
 
-`003-cli-resumable-upload` is the next feature milestone. Keep original task IDs `T021`-`T035` as traceability links when splitting implementation into OpenSpec changes.
+`003-cli-auth-upload-sessions` is the current feature milestone. Keep original task IDs `T021`-`T035` as traceability links when splitting implementation into OpenSpec changes.
 
 Suggested first slice:
 
-- Create an OpenSpec change for CLI resumable upload using tasks `T021`-`T026`.
-- Keep list/download work (`T027`-`T030`) as feature `004` unless the implementation needs shared server primitives.
-- Leave OAuth as docs-only feature `005` until explicitly prioritized.
+- Finish `003` as server upload sessions plus CLI login/config using tasks `T021`-`T025`.
+- Move the CLI resumable upload command (`T026`) into feature `004`.
+- Keep list/download work (`T027`-`T030`) as feature `005` unless the implementation needs shared server primitives.
+- Leave OAuth as docs-only feature `006` until explicitly prioritized.
 
 ## Deferred Task Groups
 
-### 003 - CLI Resumable Upload
+### 003 - CLI Auth And Upload Sessions
 
-CLI client for local-machine uploads to a configured py-files server. Includes explicit `--base-url` support, saved server URL/token config, and resumable upload sessions.
+Server-side resumable upload sessions plus CLI authentication/config for targeting a py-files server from a local machine.
 
 - `T021`: server upload-session routes
 - `T022`: chunk append and session state machine
 - `T023`: finalize/promote upload session
 - `T024`: CLI argparse entry
 - `T025`: CLI login and JWT storage
+
+### 004 - CLI Resumable Upload Command
+
+CLI upload command for local-machine file transfers using the saved server URL/token and resumable upload sessions.
+
 - `T026`: resumable upload driver
 
-### 004 - List And Download
+### 005 - List And Download
 
 - `T027`: object listing route
 - `T028`: object metadata and content download routes
 - `T029`: browser object list and download UI
 - `T030`: CLI download command
 
-### 005 - Docs And Verification Polish
+### 006 - Docs And Verification Polish
 
 - `T031`: document OAuth as deferred
 - `T032`: reconcile OpenAPI parity

@@ -1,4 +1,4 @@
-# Design: CLI Resumable Upload
+# Design: CLI Auth And Upload Sessions
 
 ## Existing Context
 
@@ -28,18 +28,16 @@ The CLI exposes a global `--base-url` option. Commands resolve the server URL in
 
 `pyfiles login --base-url <url>` sends credentials to `/api/v1/auth/login`, then stores the normalized API base URL and JWT in the user's config directory, such as `~/.config/py-files/` on Unix or the platform equivalent.
 
-`pyfiles upload <path>` uses the saved or explicit base URL and token, creates or resumes an upload session, sends contiguous chunks with `Upload-Offset`, and completes the session. Re-running the command after interruption should continue from the server's accepted offset when possible instead of resending bytes already accepted.
+`pyfiles upload <path>` is intentionally deferred to feature `004`. This feature stores the base URL and token in the same shape that the upload command will consume.
 
 ## Error Handling
 
-- Missing base URL: fail before reading file bytes with a clear message.
 - Authentication failure: fail without creating or appending a session.
-- Offset mismatch: refresh expected offset and retry from that byte when the local file still matches the session.
-- Oversized file: fail with a clear message before transfer when file size is known.
-- Network interruption: preserve enough local session metadata to retry.
+- Oversized upload-session create requests: fail before creating a partial file.
+- Offset mismatch: return the server-expected offset for the future CLI upload command.
 
 ## Verification
 
 - Server tests cover session create, chunk append, offset mismatch, completion, ownership denial, and size limits.
-- CLI tests cover base URL resolution, login config write, missing configuration, upload command happy path, and resume after an interrupted transfer.
-- A smoke test demonstrates `pyfiles login --base-url ...` followed by `pyfiles upload ...` against a running API.
+- CLI tests cover base URL normalization, missing base URL for login, and login config write.
+- A smoke test demonstrates `pyfiles login --base-url ...` against a running API.

@@ -1,4 +1,4 @@
-# Tasks: Feature 003 CLI Resumable Upload
+# Tasks: Feature 003 CLI Auth And Upload Sessions
 
 ## Server
 
@@ -10,11 +10,14 @@
 
 - [x] T024 Implement the `pyfiles` argparse root in `clients/python/src/py_files_cli/__main__.py`, including global `--base-url` resolution.
 - [x] T025 Implement `clients/python/src/py_files_cli/commands/login.py` to authenticate against the configured server and store the JWT plus normalized base URL in user config.
-- [ ] T026 Implement `clients/python/src/py_files_cli/commands/upload.py` with resumable upload-session create/append/complete flow, progress output, interruption-safe retry metadata, and clear exit codes.
+- [x] T025a Add CLI tests for base URL normalization, missing `--base-url`, and login config storage.
 
 ## Tests And Docs
 
-- [x] T026a Add focused server tests for session create, append, offset mismatch, complete, ownership denial, and size limit behavior.
-- [ ] T026b Add CLI tests for missing base URL, explicit `--base-url`, saved config reuse, login storage, and resumable upload retry behavior.
-- [ ] T026c Update `clients/python/README.md` and `specs/001-network-file-upload-client/quickstart.md` with runnable CLI login/upload examples using `--base-url`.
-- [ ] T026d Run targeted server and CLI validation, then record exact commands in the closeout.
+- [x] T023a Add focused server tests for session create, append, offset mismatch, complete, ownership denial, and size limit behavior.
+- [x] T025b Run targeted server and CLI validation, then record exact commands in the closeout.
+
+## Validation
+
+- `cd server && pytest tests/test_upload_sessions.py -vv -s` -> 6 passed, 1 warning.
+- `cd clients/python && .venv/bin/python -m pytest tests/test_cli_login.py` -> 3 passed.
