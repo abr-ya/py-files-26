@@ -17,17 +17,19 @@ This backlog preserves the existing specification numbering while the project mo
 
 ## Next Candidate Change
 
-`002-network-file-upload-follow-on` is the next feature milestone. Keep task IDs `T021`-`T035` intact when splitting implementation into OpenSpec changes.
+`003-cli-resumable-upload` is the next feature milestone. Keep original task IDs `T021`-`T035` as traceability links when splitting implementation into OpenSpec changes.
 
 Suggested first slice:
 
 - Create an OpenSpec change for CLI resumable upload using tasks `T021`-`T026`.
-- Keep list/download work (`T027`-`T030`) as a separate slice unless the implementation needs shared server primitives.
-- Leave OAuth as docs-only (`T031`) until explicitly prioritized.
+- Keep list/download work (`T027`-`T030`) as feature `004` unless the implementation needs shared server primitives.
+- Leave OAuth as docs-only feature `005` until explicitly prioritized.
 
 ## Deferred Task Groups
 
-### 002A - CLI Resumable Upload
+### 003 - CLI Resumable Upload
+
+CLI client for local-machine uploads to a configured py-files server. Includes explicit `--base-url` support, saved server URL/token config, and resumable upload sessions.
 
 - `T021`: server upload-session routes
 - `T022`: chunk append and session state machine
@@ -36,14 +38,14 @@ Suggested first slice:
 - `T025`: CLI login and JWT storage
 - `T026`: resumable upload driver
 
-### 002B - List And Download
+### 004 - List And Download
 
 - `T027`: object listing route
 - `T028`: object metadata and content download routes
 - `T029`: browser object list and download UI
 - `T030`: CLI download command
 
-### 002C - Docs And Verification Polish
+### 005 - Docs And Verification Polish
 
 - `T031`: document OAuth as deferred
 - `T032`: reconcile OpenAPI parity
@@ -55,4 +57,5 @@ Suggested first slice:
 
 - Do not renumber the existing `001` and `002` milestones.
 - Do not mark `002` accepted until the deferred Variant C work is implemented and verified.
+- Number new OpenSpec changes sequentially (`003`, `004`, `005`, ...), without letter suffixes.
 - For future OpenSpec changes, create `openspec/changes/<change-id>/` artifacts first, then archive only after validation and accepted spec sync.
