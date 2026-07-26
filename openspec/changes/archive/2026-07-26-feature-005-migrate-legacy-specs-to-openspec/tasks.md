@@ -22,9 +22,9 @@
 
 ## 4. Cleanup And Validation
 
-- [ ] 4.1 Search for wording that still presents `specs/` as current authority and update it to OpenSpec-first wording where appropriate.
-- [ ] 4.2 Run `openspec validate feature-005-migrate-legacy-specs-to-openspec --strict`.
-- [ ] 4.3 Run `openspec validate --changes --strict`.
-- [ ] 4.4 Run `openspec validate --specs --strict` after accepted specs are synced or after archive.
-- [ ] 4.5 Run `git diff --check`.
-- [ ] 4.6 Archive the completed change only after validation is green and confirm that `openspec list` no longer shows feature `005` as active.
+- [x] 4.1 Search for wording that still presents `specs/` as current authority and update it to OpenSpec-first wording where appropriate.
+- [x] 4.2 Run `openspec validate feature-005-migrate-legacy-specs-to-openspec --strict`.
+- [x] 4.3 Run `openspec validate --changes --strict`.
+- [x] 4.4 Run `openspec validate --specs --strict` after accepted specs are synced or after archive.
+- [x] 4.5 Run `git diff --check`.
+- [x] 4.6 Archive the completed change only after validation is green and confirm that `openspec list` no longer shows feature `005` as active.

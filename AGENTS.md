@@ -7,8 +7,8 @@ This repository contains a small network file upload system split by surface:
 - `server/`: FastAPI backend package (`src/py_files_server`) with API routes, SQLAlchemy models, services, settings, and pytest tests in `server/tests`.
 - `frontend/`: server-rendered browser UI assets, with templates in `frontend/templates` and static JavaScript/CSS in `frontend/static`.
 - `clients/python/`: installable Python CLI package (`src/py_files_cli`) exposing the `pyfiles` command.
-- `specs/`: product/specification work, task breakdowns, quickstart notes, and OpenAPI contract.
-- `docs/`: operational and PR/deployment documentation.
+- `openspec/`: current product requirements, backlog, active changes, accepted specs, and archived change history.
+- `docs/`: operational and PR/deployment documentation, including legacy pre-OpenSpec specs under `docs/legacy-specs/`.
 
 Keep changes near the surface they affect. Update specs or docs when behavior, APIs, or deployment steps change.
 

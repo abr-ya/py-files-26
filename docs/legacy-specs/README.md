@@ -9,4 +9,4 @@ Current product requirements, roadmap status, active changes, and archived chang
 - Active feature work: `openspec/changes/`
 - Archived feature work: `openspec/changes/archive/`
 
-Use files in this directory only for historical context and original task traceability. Do not treat `specs/` as the current source of truth.
+Use files in this directory only for historical context and original task traceability. Do not treat `docs/legacy-specs/` as the current source of truth.

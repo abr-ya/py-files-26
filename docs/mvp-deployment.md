@@ -1,6 +1,6 @@
 # MVP: Running and Minimal VPS Deploy
 
-Short guide for local runs and test deployments of **py-files** (FastAPI + SQLite + filesystem blobs). More detail on the dev setup: [`specs/001-network-file-upload-client/quickstart.md`](../specs/001-network-file-upload-client/quickstart.md).
+Short guide for local runs and test deployments of **py-files** (FastAPI + SQLite + filesystem blobs). Current requirements and roadmap routing live in [`openspec/`](../openspec/); the old quickstart under `docs/legacy-specs/` is legacy reference only.
 
 ## Server stack
 

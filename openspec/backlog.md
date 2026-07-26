@@ -1,6 +1,6 @@
 # OpenSpec Backlog
 
-This backlog preserves original task traceability while the project completes its move from the legacy `specs/` layout to OpenSpec.
+This backlog preserves original task traceability after the project moved from the legacy Spec Kit layout to OpenSpec.
 
 ## Sources Of Truth
 
@@ -9,25 +9,24 @@ This backlog preserves original task traceability while the project completes it
 - Archived feature work: `openspec/changes/archive/`
 - Roadmap and feature routing: `openspec/backlog.md`
 - Repo-local OpenSpec workflow: `docs/agent-openspec-token-guide.md`
-- Legacy reference and original task traceability only: `specs/`
+- Legacy reference and original task traceability only: `docs/legacy-specs/`
 
 ## Roadmap
 
 | ID | Status | Area | Summary | Source |
 | --- | --- | --- | --- | --- |
-| 001-network-file-upload-client | Accepted | Browser MVP | FastAPI backend, login/password auth, SQLite metadata, filesystem blob storage, TTL purge hook, multipart browser upload, and vanilla JS upload UI. Original tasks `T001`-`T020` are complete and migrate into accepted OpenSpec capabilities through feature `005`. | `openspec/specs/browser-upload/spec.md`, `openspec/specs/auth-and-accounts/spec.md`, `openspec/specs/stored-objects/spec.md`, `openspec/specs/api-contract/spec.md`, `openspec/specs/spec-governance/spec.md` |
+| 001-network-file-upload-client | Accepted | Browser MVP | FastAPI backend, login/password auth, SQLite metadata, filesystem blob storage, TTL purge hook, multipart browser upload, and vanilla JS upload UI. Original tasks `T001`-`T020` are complete and migrated into accepted OpenSpec capabilities through feature `005`. | `openspec/specs/browser-upload/spec.md`, `openspec/specs/auth-and-accounts/spec.md`, `openspec/specs/stored-objects/spec.md`, `openspec/specs/api-contract/spec.md`, `openspec/specs/spec-governance/spec.md` |
 | 002-network-file-upload-follow-on | Backlog | CLI, downloads, parity | Feature `003` accepted tasks `T021`-`T025`; remaining deferred tasks start at `T026`: CLI upload command, object list/download routes and UI, CLI download, OAuth deferred docs, OpenAPI parity, integration tests, TTL denial tests, and quickstart refresh. | `openspec/backlog.md`, active or future `openspec/changes/feature-*` |
-| feature-005-migrate-legacy-specs-to-openspec | In Progress | Specs migration | Move current requirements and roadmap routing to OpenSpec, mark `specs/` as legacy reference, and keep original task IDs traceable. | `openspec/changes/feature-005-migrate-legacy-specs-to-openspec/` |
+| feature-005-migrate-legacy-specs-to-openspec | Accepted | Specs migration | Moved current requirements and roadmap routing to OpenSpec, moved legacy specs to `docs/legacy-specs/`, and kept original task IDs traceable. | `openspec/changes/archive/2026-07-26-feature-005-migrate-legacy-specs-to-openspec/`, `docs/legacy-specs/` |
 
 ## Next Candidate Change
 
-`004-cli-resumable-upload-command` remains the active implementation milestone, while `005-migrate-legacy-specs-to-openspec` is the active docs/spec migration milestone. Keep original task IDs `T021`-`T035` as traceability links when splitting implementation into OpenSpec changes.
+`004-cli-resumable-upload-command` remains the active implementation milestone. Keep original task IDs `T021`-`T035` as traceability links when splitting implementation into OpenSpec changes.
 
 Suggested first slice:
 
 - Feature `003` is accepted as server upload sessions plus CLI login/config using tasks `T021`-`T025`.
 - Finish feature `004` as the CLI resumable upload command (`T026`).
-- Finish feature `005` as the legacy specs to OpenSpec migration.
 - Keep list/download work (`T027`-`T030`) as feature `006` unless the implementation needs shared server primitives.
 - Leave OAuth and verification polish as feature `007` until explicitly prioritized.
 
@@ -51,11 +50,11 @@ CLI upload command for local-machine file transfers using the saved server URL/t
 
 ### 005 - Legacy Specs To OpenSpec Migration
 
-Docs/spec migration that makes `openspec/` the only current source of truth and marks `specs/` as legacy reference.
+Accepted docs/spec migration that makes `openspec/` the only current source of truth and moves legacy specs to `docs/legacy-specs/`.
 
 - Migrate accepted behavior into capability-oriented OpenSpec specs
 - Preserve original task IDs `T001`-`T035` as traceability links
-- Mark `specs/` legacy and update OpenSpec-first workflow guidance
+- Move legacy specs under `docs/legacy-specs/` and update OpenSpec-first workflow guidance
 
 ### 006 - List And Download
 
@@ -77,5 +76,5 @@ Docs/spec migration that makes `openspec/` the only current source of truth and 
 - Do not renumber the existing `001` and `002` milestones.
 - Do not mark `002` accepted until the deferred Variant C work is implemented and verified.
 - Number new OpenSpec changes sequentially (`003`, `004`, `005`, ...), without letter suffixes.
-- Treat `specs/` as legacy reference only after feature `005` completes; use it only for historical context and original task traceability.
+- Treat `docs/legacy-specs/` as legacy reference only; use it only for historical context and original task traceability.
 - For future OpenSpec changes, create `openspec/changes/<change-id>/` artifacts first, then archive only after validation and accepted spec sync.
