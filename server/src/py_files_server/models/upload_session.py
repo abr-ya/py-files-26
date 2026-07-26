@@ -28,9 +28,11 @@ class UploadSession(Base):
         nullable=False,
         index=True,
     )
+    original_filename: Mapped[str] = mapped_column(String(1024), nullable=False)
     expected_size: Mapped[int] = mapped_column(BigInteger, nullable=False)
     received_bytes: Mapped[int] = mapped_column(BigInteger, nullable=False, default=0)
     partial_storage_path: Mapped[str] = mapped_column(String(2048), nullable=False)
+    sha256: Mapped[str | None] = mapped_column(String(64), nullable=True)
     state: Mapped[str] = mapped_column(
         String(32),
         nullable=False,

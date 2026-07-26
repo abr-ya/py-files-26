@@ -112,6 +112,57 @@ The user may sign in with a Google account instead of login plus password if an 
 - **FR-011**: In the MVP, the console client MUST support resuming or an equivalent chunked upload after interruption for objects up to **1 GB**; the server MUST expose a compatible contract (details—in the plan). The web client MAY omit resume in the MVP if the user gets clear guidance to **retry the full upload** after failure (clarification variant C, 2026-04-29).
 - **FR-012**: The system MUST delete stored objects after their retention period from successful server acceptance; the default is **30 calendar days** unless deployment configuration states otherwise (clarification variant B, 2026-04-29). Download attempts after deletion MUST get a clear message; where it does not overload the primary flow, the MVP SHOULD surface the applicable period or policy to the user.
 
+### Accepted Follow-on Requirements
+
+#### Requirement: Configurable CLI Server Target
+
+The CLI MUST allow a user running on a local machine to target a py-files server by providing an API base URL.
+
+##### Scenario: Login with explicit server URL
+
+- **GIVEN** the py-files API is available at a network URL
+- **WHEN** the user runs `pyfiles --base-url <url> login` with valid credentials
+- **THEN** the CLI authenticates against that server
+- **AND** stores the normalized base URL and access token in local user config for later commands
+
+##### Scenario: Login stores reusable server URL
+
+- **GIVEN** the user previously logged in with `--base-url <url>`
+- **WHEN** the login command completes successfully
+- **THEN** the CLI stores the saved server URL and token for later commands
+
+##### Scenario: Login requires server URL
+
+- **GIVEN** no server URL has been saved in local config
+- **WHEN** the user runs `pyfiles login` without `--base-url`
+- **THEN** the CLI exits before sending credentials
+- **AND** reports that `--base-url` is required
+
+#### Requirement: Server Resumable Upload Sessions
+
+The server MUST support authenticated resumable upload sessions using contiguous byte offsets.
+
+##### Scenario: Create and complete upload session through API
+
+- **GIVEN** the user is authenticated
+- **WHEN** the client creates an upload session and appends all bytes with contiguous `Upload-Offset` values
+- **THEN** the server accepts the chunks
+- **AND** completes the session into a `StoredUploadObject`
+
+##### Scenario: Offset mismatch reports expected position
+
+- **GIVEN** the client sends a chunk with an `Upload-Offset` that does not match the session's received byte count
+- **WHEN** the server rejects the chunk
+- **THEN** the response indicates an offset mismatch
+- **AND** reports the server's expected offset
+
+##### Scenario: Oversized session is rejected
+
+- **GIVEN** the requested upload size exceeds `MAX_UPLOAD_BYTES`
+- **WHEN** the client creates an upload session
+- **THEN** the server rejects the request
+- **AND** does not create a partial upload file
+
 ### Key Entities
 
 - **User**: account with login identifier and password secret; optional link to an external provider (Google).

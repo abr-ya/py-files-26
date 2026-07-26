@@ -15,6 +15,7 @@ from fastapi.templating import Jinja2Templates
 
 from py_files_server.api.routes import auth as auth_routes
 from py_files_server.api.routes import objects as objects_routes
+from py_files_server.api.routes import upload_sessions as upload_sessions_routes
 from py_files_server.db import SessionLocal, init_db
 from py_files_server.services.fs_storage import ensure_storage_layout
 from py_files_server.services.purge import purge_expired_upload_objects
@@ -77,6 +78,7 @@ app = FastAPI(title="py-files-server", lifespan=lifespan)
 api_router = APIRouter(prefix="/api/v1")
 api_router.include_router(auth_routes.router, prefix="/auth")
 api_router.include_router(objects_routes.router, prefix="/objects")
+api_router.include_router(upload_sessions_routes.router, prefix="/upload-sessions")
 app.include_router(api_router)
 
 templates = Jinja2Templates(directory=str(_FRONTEND_TEMPLATES))
