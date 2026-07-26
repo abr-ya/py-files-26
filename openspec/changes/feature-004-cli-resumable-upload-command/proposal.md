@@ -18,13 +18,12 @@ Feature `003` established server upload-session primitives and CLI login/config.
 
 ## Non-Goals
 
-- Object listing and downloads remain feature `005`.
+- Object listing and downloads remain feature `006` after the legacy specs migration.
 - Browser UI changes are out of scope.
 - Multi-server profiles and external credential vaults are out of scope.
 
 ## Traceability
 
 - Backlog item: `004-cli-resumable-upload-command`
-- Source task: `T026` from `specs/002-network-file-upload-follow-on/tasks.md`
+- Source task: `T026`, preserved through `openspec/backlog.md` traceability from the legacy follow-on tracker
 - Depends on feature `003-cli-auth-upload-sessions`
-
