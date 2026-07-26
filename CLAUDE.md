@@ -7,11 +7,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 This is a FastAPI-based file upload service with authentication, SQLite metadata storage, and filesystem blob storage. The server provides:
 
 - User authentication with JWT tokens
-- Multipart file upload with size limits
+- Multipart file upload with size limits (default: 1GB per file)
 - SQLite database for metadata (users, stored objects, upload sessions)
 - Filesystem storage for actual file blobs
-- Automatic TTL-based cleanup of expired files
+- Automatic TTL-based cleanup of expired files (30-day default)
 - Browser-based UI for uploading files
+- OpenAPI-documented HTTP APIs under `/api/v1`
+
+**Technical Stack**: Python 3.11+, FastAPI, SQLAlchemy/SQLModel, Pydantic v2, passlib[bcrypt], python-jose (JWT), python-multipart
 
 ## Code Architecture
 
@@ -104,14 +107,21 @@ Key environment variables (can be set in `.env` file in `server/` directory):
 │   │   ├── db.py               # Database setup
 │   │   └── settings.py         # Configuration
 │   ├── tests/                  # Test suite
-│   ├── pyproject.toml          # Project dependencies
-│   └── README.md              # Server setup instructions
-├── frontend/                   # Browser UI files
+│   └── pyproject.toml          # Project dependencies
+├── frontend/                   # Browser UI files (served via /static route)
 │   ├── templates/              # HTML templates
 │   └── static/                 # CSS, JS, images
-├── docs/                       # Documentation
-└── specs/                      # Detailed specifications
+├── docs/                       # Documentation and specifications
+│   └── legacy-specs/           # Feature specs and design documents
+│       └── 001-network-file-upload-client/
+│           ├── contracts/openapi.yaml  # OpenAPI specification
+│           └── plan.md         # Implementation plan and architecture
+└── clients/python/             # Future: Python CLI client (planned, not yet implemented)
 ```
+
+**Important References**:
+- OpenAPI contract: `docs/legacy-specs/001-network-file-upload-client/contracts/openapi.yaml`
+- Technical context and architecture decisions: `docs/legacy-specs/001-network-file-upload-client/plan.md`
 
 ## Testing Approach
 
@@ -120,3 +130,14 @@ Tests use FastAPI's TestClient for integration testing:
 - `test_health.py`: Basic health check endpoint
 
 Tests can override settings using FastAPI's dependency override mechanism.
+
+## Design Constraints
+
+Per project constitution (see `.cursor/rules/specify-rules.mdc`):
+- Use vanilla JavaScript for frontend (no React/Vue frameworks)
+- Maintain OpenAPI specification in `docs/legacy-specs/001-network-file-upload-client/contracts/openapi.yaml`
+- TLS/HTTPS mandatory for non-localhost deployments
+- Single file upload limit: 1GB (1×10⁹ bytes) default
+- JWT access token TTL: 24 hours
+- Storage backend: filesystem (object store migration deferred until scaling needed)
+- Authentication: JWT-based (Google OAuth deferred as optional future enhancement)
