@@ -84,3 +84,20 @@ Alternative considered: use a letter suffix like `004-a`. The repo working rules
 5. Run `openspec validate --specs --strict`, `openspec validate --changes --strict`, and `git diff --check`.
 
 Rollback is a docs-only revert: remove the new OpenSpec specs/change artifacts and restore previous backlog/source-of-truth wording.
+
+## Source Mapping
+
+| Legacy source | Classification | OpenSpec destination |
+| --- | --- | --- |
+| `specs/001-network-file-upload-client/spec.md` | Product requirements, scenarios, edge cases, success criteria | Split across `browser-upload`, `auth-and-accounts`, `stored-objects`, `api-contract`, and existing `cli-resumable-upload` |
+| `specs/001-network-file-upload-client/plan.md` | Architecture and implementation notes | Summarize only stable governance points in `api-contract`; keep detailed stack notes as legacy reference |
+| `specs/001-network-file-upload-client/data-model.md` | Product data model and validation notes | `stored-objects`, `auth-and-accounts`, and existing `cli-resumable-upload` |
+| `specs/001-network-file-upload-client/contracts/openapi.yaml` | API contract artifact | Route authority through `api-contract`; keep or move the YAML according to implementation review, but legacy copies must not be treated as current unless referenced by OpenSpec |
+| `specs/001-network-file-upload-client/quickstart.md` | Operational quickstart | Legacy reference unless refreshed by future docs/verification work |
+| `specs/001-network-file-upload-client/research.md` | Historical decision record | Legacy reference; migrate only decisions needed by current capability specs |
+| `specs/001-network-file-upload-client/tasks.md` | Completed original task tracker `T001`-`T020` | Traceability reference; accepted behavior moves to OpenSpec specs |
+| `specs/001-network-file-upload-client/checklists/requirements.md` | Historical review checklist | Legacy reference |
+| `specs/002-network-file-upload-follow-on/spec.md` | Deferred follow-on milestone wrapper | OpenSpec backlog routing and future changes |
+| `specs/002-network-file-upload-follow-on/tasks.md` | Follow-on task tracker `T021`-`T035` | `openspec/backlog.md` with original task IDs preserved; completed `T021`-`T025` remain covered by `cli-resumable-upload` |
+
+Feature 003 accepted behavior already lives in `openspec/specs/cli-resumable-upload/spec.md`; this migration should reference that spec instead of copying its requirements into new capability specs.

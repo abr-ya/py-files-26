@@ -1,8 +1,8 @@
 ## 1. Source Inventory
 
-- [ ] 1.1 Inventory legacy source files under `specs/001-network-file-upload-client/` and `specs/002-network-file-upload-follow-on/`, classifying each as product requirement, implementation note, API contract, quickstart, checklist, or historical context.
-- [ ] 1.2 Compare the inventory against existing `openspec/specs/cli-resumable-upload/spec.md` to avoid duplicating Feature 003 accepted behavior.
-- [ ] 1.3 Record the final source mapping in this feature's closeout notes or updated backlog so future agents can see where each legacy area moved.
+- [x] 1.1 Inventory legacy source files under `specs/001-network-file-upload-client/` and `specs/002-network-file-upload-follow-on/`, classifying each as product requirement, implementation note, API contract, quickstart, checklist, or historical context.
+- [x] 1.2 Compare the inventory against existing `openspec/specs/cli-resumable-upload/spec.md` to avoid duplicating Feature 003 accepted behavior.
+- [x] 1.3 Record the final source mapping in this feature's closeout notes or updated backlog so future agents can see where each legacy area moved.
 
 ## 2. OpenSpec Accepted Specs
 
