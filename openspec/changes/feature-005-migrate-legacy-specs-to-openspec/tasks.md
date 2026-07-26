@@ -4,13 +4,13 @@
 - [x] 1.2 Compare the inventory against existing `openspec/specs/cli-resumable-upload/spec.md` to avoid duplicating Feature 003 accepted behavior.
 - [x] 1.3 Record the final source mapping in this feature's closeout notes or updated backlog so future agents can see where each legacy area moved.
 
-## 2. OpenSpec Accepted Specs
+## 2. Archive-ready OpenSpec Specs
 
-- [ ] 2.1 Add accepted `openspec/specs/browser-upload/spec.md` content for browser login/upload behavior, upload outcomes, retry guidance, and size-limit handling.
-- [ ] 2.2 Add accepted `openspec/specs/auth-and-accounts/spec.md` content for login/password auth, registration policy, token/session expectations, and OAuth deferred status.
-- [ ] 2.3 Add accepted `openspec/specs/stored-objects/spec.md` content for stored object metadata, ownership, retention/expiry, and deferred list/download routing.
-- [ ] 2.4 Add accepted `openspec/specs/api-contract/spec.md` content for `/api/v1`, JSON metadata, binary content transfer, and OpenAPI contract authority.
-- [ ] 2.5 Add accepted `openspec/specs/spec-governance/spec.md` content making `openspec/` the single current source of truth and requiring a legacy marker for `specs/`.
+- [x] 2.1 Prepare archive-ready `browser-upload` delta spec content for browser login/upload behavior, upload outcomes, retry guidance, and size-limit handling.
+- [x] 2.2 Prepare archive-ready `auth-and-accounts` delta spec content for login/password auth, registration policy, token/session expectations, and OAuth deferred status.
+- [x] 2.3 Prepare archive-ready `stored-objects` delta spec content for stored object metadata, ownership, retention/expiry, and deferred list/download routing.
+- [x] 2.4 Prepare archive-ready `api-contract` delta spec content for `/api/v1`, JSON metadata, binary content transfer, and OpenAPI contract authority.
+- [x] 2.5 Prepare archive-ready `spec-governance` delta spec content making `openspec/` the single current source of truth and requiring a legacy marker for `specs/`.
 
 ## 3. Legacy Marker And Routing
 
