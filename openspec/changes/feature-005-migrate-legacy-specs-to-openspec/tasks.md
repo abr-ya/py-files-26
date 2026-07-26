@@ -14,11 +14,11 @@
 
 ## 3. Legacy Marker And Routing
 
-- [ ] 3.1 Add a root legacy notice in `specs/` that states the directory is historical/reference-only after this migration and points to `openspec/` for current requirements, backlog, active changes, and archives.
-- [ ] 3.2 Update `openspec/backlog.md` so Sources Of Truth points to `openspec/specs/`, active/archived changes, and repo-local workflow docs instead of legacy `specs/`.
-- [ ] 3.3 Renumber pending roadmap entries so feature `005` is this migration, List/Download moves to the next available feature number, and Docs/Verification Polish moves after it.
-- [ ] 3.4 Preserve traceability from original task IDs `T021`-`T035` to the current OpenSpec backlog and future feature numbers.
-- [ ] 3.5 Update `docs/agent-openspec-token-guide.md` if needed so future agents start from OpenSpec and treat `specs/` as legacy.
+- [x] 3.1 Add a root legacy notice in `specs/` that states the directory is historical/reference-only after this migration and points to `openspec/` for current requirements, backlog, active changes, and archives.
+- [x] 3.2 Update `openspec/backlog.md` so Sources Of Truth points to `openspec/specs/`, active/archived changes, and repo-local workflow docs instead of legacy `specs/`.
+- [x] 3.3 Renumber pending roadmap entries so feature `005` is this migration, List/Download moves to the next available feature number, and Docs/Verification Polish moves after it.
+- [x] 3.4 Preserve traceability from original task IDs `T021`-`T035` to the current OpenSpec backlog and future feature numbers.
+- [x] 3.5 Update `docs/agent-openspec-token-guide.md` if needed so future agents start from OpenSpec and treat `specs/` as legacy.
 
 ## 4. Cleanup And Validation
 

@@ -7,6 +7,5 @@
 ## Tests And Docs
 
 - [ ] T026a Add CLI tests for missing base URL/token, explicit `--base-url`, saved config reuse, login storage reuse, resumable upload happy path, offset mismatch handling, and retry behavior.
-- [ ] T026b Update `clients/python/README.md` and `specs/001-network-file-upload-client/quickstart.md` with runnable CLI upload examples using `--base-url`.
+- [ ] T026b Update `clients/python/README.md` with runnable CLI upload examples using `--base-url`; update any current OpenSpec-routed docs instead of relying on legacy `specs/` as source of truth.
 - [ ] T026c Run targeted CLI validation and local smoke validation, then record exact commands in the closeout.
-

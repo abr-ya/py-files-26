@@ -9,11 +9,12 @@ This guide is the working rulebook for Codex agents in this repository. Follow i
    - `openspec/config.yaml`
    - `openspec/backlog.md` when it exists
    - the active change under `openspec/changes/<change-id>/`
+   - accepted specs under `openspec/specs/`
    - related source/spec files named by the task
 3. For implementation work, run OpenSpec status/instructions before coding when available:
    - `openspec status --change <change-id> --json`
    - `openspec instructions apply --change <change-id> --json`
-4. Preserve feature numbering from existing `specs/*` and `openspec/backlog.md`.
+4. Preserve feature numbering and original task IDs from `openspec/backlog.md`; use legacy `specs/*` only for historical traceability when OpenSpec points there.
 5. Keep completed and deferred work clearly separated:
    - completed phases stay marked as done
    - deferred phases remain unchecked and point to their source spec/task files
@@ -40,3 +41,7 @@ This guide is the working rulebook for Codex agents in this repository. Follow i
 3. Make focused edits near the affected surface.
 4. Run the narrowest meaningful validation.
 5. Report changed files, validation, and remaining next step.
+
+## Legacy Specs
+
+The legacy `specs/` tree is reference-only after the OpenSpec migration. Current requirements, roadmap routing, active changes, and archive history should be read from `openspec/` first. Open legacy `specs/*` only when you need original task IDs, historical Spec Kit context, or a file explicitly referenced by an active OpenSpec task.
