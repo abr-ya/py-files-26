@@ -119,6 +119,8 @@ Good for fast validation; when exposed to the public internet prefer adding a re
 
 Back up together: the SQLite file from `DATABASE_URL` and everything under `STORAGE_ROOT`.
 
+For existing SQLite deployments that need additive schema fields after an update, see [`sqlite-schema-update.md`](sqlite-schema-update.md).
+
 ## CLI vs server
 
 The **`pyfiles`** client (`clients/python`) takes `--base-url` pointing at your API (`http://localhost:8000`, or `https://…` after the proxy). Default config paths: quickstart (`~/.config/py-files/` on Unix).

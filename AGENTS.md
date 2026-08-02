@@ -51,6 +51,8 @@ Server tests use `pytest`, `pytest-asyncio`, `httpx`, and FastAPI `TestClient`. 
 
 Tests set temporary `DATABASE_URL`, `STORAGE_ROOT`, and `JWT_SECRET` in `conftest.py`; avoid hard-coding local paths or secrets.
 
+For Codex validation handoff, follow `docs/codex-agent-notes.md`: provide exact test commands for the user to run locally and treat pasted output as validation evidence.
+
 ## Commit & Pull Request Guidelines
 
 Git history uses concise conventional-style messages such as `feat(server): ...`, `docs(spec): ...`, and `feat(us1): ...`. Keep commits focused and include the affected area in the scope when helpful.

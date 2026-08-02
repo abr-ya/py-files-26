@@ -6,6 +6,8 @@ import argparse
 from collections.abc import Sequence
 
 from py_files_cli.commands.login import add_login_parser
+from py_files_cli.commands.status import add_status_parser
+from py_files_cli.commands.upload import add_upload_parser
 from py_files_cli.config import normalize_base_url
 
 
@@ -20,6 +22,8 @@ def build_parser() -> argparse.ArgumentParser:
     )
     subparsers = parser.add_subparsers(dest="command", required=True)
     add_login_parser(subparsers)
+    add_status_parser(subparsers)
+    add_upload_parser(subparsers)
     return parser
 
 
