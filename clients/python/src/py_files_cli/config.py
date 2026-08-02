@@ -39,6 +39,10 @@ def config_path() -> Path:
     return config_dir() / "config.json"
 
 
+def upload_retry_dir() -> Path:
+    return config_dir() / "upload-retries"
+
+
 def load_config() -> CliConfig:
     path = config_path()
     if not path.exists():
@@ -65,4 +69,3 @@ def save_config(config: CliConfig) -> None:
         + "\n",
         encoding="utf-8",
     )
-

@@ -2,7 +2,7 @@
 
 ## Summary
 
-Implement `pyfiles upload <path>` using the saved server URL/token from feature `003` and the resumable upload-session API. The command shall create an upload session, append file chunks with contiguous `Upload-Offset` values, complete the session, and preserve retry metadata for interrupted uploads.
+Implement `pyfiles upload <path>` using the saved server URL/token from feature `003` and the resumable upload-session API. The command shall create an upload session, append file chunks with contiguous `Upload-Offset` values, complete the session, and preserve retry metadata for interrupted uploads. Add a small `pyfiles status` preflight command so users can verify that the configured remote server is reachable before uploading.
 
 ## Motivation
 
@@ -12,14 +12,16 @@ Feature `003` established server upload-session primitives and CLI login/config.
 
 - Implement `clients/python/src/py_files_cli/commands/upload.py`.
 - Resolve base URL and token from explicit `--base-url` or saved local config.
+- Implement `pyfiles status` to resolve the server URL from explicit `--base-url` or saved local config and check the remote `/health` endpoint.
 - Create, append, and complete upload sessions through `/api/v1/upload-sessions`.
 - Preserve local retry metadata so an interrupted upload can resume when the local file still matches the saved metadata.
-- Add focused CLI tests for missing config, saved config reuse, upload flow, and resume behavior.
+- Add focused CLI tests for missing config, saved config reuse, status preflight, upload flow, and resume behavior.
 
 ## Non-Goals
 
 - Object listing and downloads remain feature `006` after the legacy specs migration.
 - Browser UI changes are out of scope.
+- Authenticated account validation for `pyfiles status` is out of scope; it only checks server reachability through `/health`.
 - Multi-server profiles and external credential vaults are out of scope.
 
 ## Traceability

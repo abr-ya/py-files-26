@@ -41,3 +41,27 @@ The CLI MUST upload local files to a configured py-files server using resumable 
 - **WHEN** the server rejects the chunk
 - **THEN** the CLI reports or uses the server's expected offset for retry
 
+### Requirement: CLI Remote Server Status Preflight
+
+The CLI MUST provide a lightweight command for checking whether the configured py-files server is reachable before upload.
+
+#### Scenario: Status uses saved server URL
+
+- **GIVEN** the user previously logged in with `--base-url <url>`
+- **WHEN** the user runs `pyfiles status` without `--base-url`
+- **THEN** the CLI checks the saved server URL's `/health` endpoint
+- **AND** reports that the remote server is reachable when the server returns a healthy response
+
+#### Scenario: Status supports explicit server URL
+
+- **GIVEN** the py-files API is available at a network URL
+- **WHEN** the user runs `pyfiles --base-url <url> status`
+- **THEN** the CLI checks that server's `/health` endpoint
+- **AND** does not require a saved token
+
+#### Scenario: Status reports unreachable server
+
+- **GIVEN** the configured server URL is missing, unavailable, or returns an unhealthy response
+- **WHEN** the user runs `pyfiles status`
+- **THEN** the CLI exits with a non-zero status
+- **AND** reports a concise preflight failure reason
